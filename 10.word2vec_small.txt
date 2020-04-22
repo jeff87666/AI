@@ -1,0 +1,19 @@
+!wget https://raw.githubusercontent.com/joshhu/must_examples/master/my_seg_small.txt
+
+
+import sys
+from gensim.models import word2vec
+from gensim import models
+
+sentences = word2vec.LineSentence("my_seg_small.txt")
+model = word2vec.Word2Vec(sentences, size=5, min_count=1, negative=10)
+
+model.save('word2vec.model')
+model.wv.save_word2vec_format('word2vec.model', binary = False)
+print('done')
+
+
+input_str = "北京"
+res = model.wv.most_similar(input_str)
+for item in res: 
+      print(item[0] + ':' + str(item[1]))
